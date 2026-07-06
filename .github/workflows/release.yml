@@ -27,13 +27,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v4
-        with:
-          registry: docker.io
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
       - name: Extract tag
         id: extract_tag
         run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
@@ -46,8 +39,6 @@ jobs:
           tags: |
             ghcr.io/Kizuren/pihole-sync:latest
             ghcr.io/Kizuren/pihole-sync:${{ env.TAG }}
-            docker.io/Kizuren/pihole-sync:latest
-            docker.io/Kizuren/pihole-sync:${{ env.TAG }}
           platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
           provenance: false
           build-args: |
