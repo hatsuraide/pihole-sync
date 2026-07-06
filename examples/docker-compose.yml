@@ -1,0 +1,10 @@
+---
+services:
+  pihole-sync:
+    image: ghcr.io/Kizuren/pihole-sync:latest
+    container_name: pihole-sync
+    environment:
+      - PRIMARY=http://ph1.example.com|password
+      - REPLICAS=http://ph2.example.com|password,http://ph3.example.com|password
+      - FULL_SYNC=true
+      - CRON=0 * * * *
