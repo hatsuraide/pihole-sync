@@ -12,6 +12,10 @@ import (
 
 const Name = "pihole-sync"
 
+// RunCommand is the hidden CLI command the OS service manager invokes to actually run the sync
+// service; it is what daemon.New registers as the service's Arguments.
+const RunCommand = "service-run"
+
 // New builds the service handle used both to control the OS service (install/start/stop/status)
 // and, via serviceRun, as the payload the service manager actually executes.
 func New(envFile string) (kservice.Service, error) {
@@ -26,7 +30,7 @@ func New(envFile string) (kservice.Service, error) {
 }
 
 func runArguments(envFile string) []string {
-	args := []string{"service-run"}
+	args := []string{RunCommand}
 	if envFile != "" {
 		args = append(args, "--env-file", envFile)
 	}
@@ -42,7 +46,7 @@ func (p *program) Start(_ kservice.Service) error {
 	return nil
 }
 
-func (p *program) Stop(_ kservice.Service) error {
+func (*program) Stop(_ kservice.Service) error {
 	return nil
 }
 

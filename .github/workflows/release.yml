@@ -12,7 +12,7 @@ jobs:
       packages: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
@@ -37,8 +37,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/Kizuren/pihole-sync:latest
-            ghcr.io/Kizuren/pihole-sync:${{ env.TAG }}
+            ghcr.io/kizuren/pihole-sync:latest
+            ghcr.io/kizuren/pihole-sync:${{ env.TAG }}
           platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
           provenance: false
           build-args: |
@@ -52,7 +52,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       -

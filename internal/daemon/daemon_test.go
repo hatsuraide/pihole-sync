@@ -8,8 +8,8 @@ import (
 )
 
 func TestRunArguments(t *testing.T) {
-	assert.Equal(t, []string{"service-run"}, runArguments(""))
-	assert.Equal(t, []string{"service-run", "--env-file", "/etc/pihole-sync/.env"}, runArguments("/etc/pihole-sync/.env"))
+	assert.Equal(t, []string{RunCommand}, runArguments(""))
+	assert.Equal(t, []string{RunCommand, "--env-file", "/etc/pihole-sync/.env"}, runArguments("/etc/pihole-sync/.env"))
 }
 
 func TestNew(t *testing.T) {

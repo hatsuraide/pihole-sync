@@ -62,7 +62,7 @@ func TestConfig_Load_Target_Totp(t *testing.T) {
 	assert.Equal(t, "primarysecret", conf.Primary.TOTPSecret)
 	assert.Len(t, conf.Replicas, 2)
 	assert.Equal(t, "replicasecret1", conf.Replicas[0].TOTPSecret)
-	assert.Equal(t, "", conf.Replicas[1].TOTPSecret)
+	assert.Empty(t, conf.Replicas[1].TOTPSecret)
 }
 
 func TestConfig_Load_NoPrimary(t *testing.T) {

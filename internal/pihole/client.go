@@ -9,6 +9,7 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
+
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 
@@ -66,7 +67,7 @@ func (client *client) PostAuth() error {
 	client.logger.Debug().Msg("PostAuth")
 	authResponse := model.AuthResponse{}
 
-	authRequest := model.AuthRequest{Password: client.piHole.Password} //nolint:gosec // mirror API model
+	authRequest := model.AuthRequest{Password: client.piHole.Password}
 	if client.piHole.TOTPSecret != "" {
 		code, err := totp.GenerateCode(client.piHole.TOTPSecret)
 		if err != nil {
@@ -75,7 +76,7 @@ func (client *client) PostAuth() error {
 		authRequest.Totp = code
 	}
 
-	reqBytes, err := json.Marshal(authRequest)
+	reqBytes, err := json.Marshal(authRequest) //nolint:gosec // mirror API model
 	if err != nil {
 		return client.wrapError(err, nil)
 	}

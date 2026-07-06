@@ -77,7 +77,7 @@ var serviceStatusCmd = &cobra.Command{
 // executes once installed; it is not meant to be invoked directly by users, who should use `run`
 // for foreground/Docker use or `service install`/`service start` for a native background service.
 var serviceRunCmd = &cobra.Command{
-	Use:    "service-run",
+	Use:    daemon.RunCommand,
 	Hidden: true,
 	Run: func(cmd *cobra.Command, args []string) {
 		s, err := daemon.New(serviceEnvFile)
@@ -110,15 +110,21 @@ func statusLabel(status kservice.Status) string {
 		return "running"
 	case kservice.StatusStopped:
 		return "stopped"
-	default:
+	case kservice.StatusUnknown:
 		return "unknown"
 	}
+	return "unknown"
 }
 
 func init() {
 	rootCmd.AddCommand(serviceCmd)
 	rootCmd.AddCommand(serviceRunCmd)
-	serviceCmd.AddCommand(serviceInstallCmd, serviceUninstallCmd, serviceStartCmd, serviceStopCmd, serviceRestartCmd, serviceStatusCmd)
+	serviceCmd.AddCommand(serviceInstallCmd)
+	serviceCmd.AddCommand(serviceUninstallCmd)
+	serviceCmd.AddCommand(serviceStartCmd)
+	serviceCmd.AddCommand(serviceStopCmd)
+	serviceCmd.AddCommand(serviceRestartCmd)
+	serviceCmd.AddCommand(serviceStatusCmd)
 
 	serviceCmd.PersistentFlags().StringVar(&serviceEnvFile, "env-file", "",
 		"Path to a .env file the service should load on start (recommended over baking secrets into the service definition)")
