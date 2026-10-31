@@ -1,7 +1,7 @@
 ---
 services:
   pihole-sync:
-    image: ghcr.io/Kizuren/pihole-sync:latest
+    image: ghcr.io/hatsuraide/pihole-sync:latest
     container_name: pihole-sync
     environment:
       - PRIMARY=http://ph1.example.com|password
